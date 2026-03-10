@@ -50,7 +50,7 @@ namespace KaitoKid.BluePrinceDayOne
                     return;
                 }
 
-                DayOneMod.Instance.ParlorGames.Add(gameFsm);
+                DayOneMod.Instance.ParlorGameToSolve = gameFsm;
             }
         }
     }

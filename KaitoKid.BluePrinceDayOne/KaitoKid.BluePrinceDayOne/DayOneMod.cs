@@ -16,10 +16,10 @@ namespace KaitoKid.BluePrinceDayOne
 
         public DayOneConfig _config;
         public DayOneInput _input;
+        private ParlorSolver _parlorSolver;
         public PlayMakerFSM GlobalPersistentManager;
         public PlayMakerFSM GlobalManager;
-        public List<PlayMakerFSM> ParlorGames;
-        public PlayMakerFSM? ParlorGame => ParlorGames.Any() ? ParlorGames.First() : null;
+        public PlayMakerFSM ParlorGameToSolve;
 
         public override void OnInitializeMelon()
         {
@@ -27,9 +27,10 @@ namespace KaitoKid.BluePrinceDayOne
 
             LoggerInstance.Msg($"Initializing DayOne...");
             base.OnInitializeMelon();
-            ParlorGames = new List<PlayMakerFSM>();
+            ParlorGameToSolve = null;
             _config = new DayOneConfig();
             _input = new DayOneInput(LoggerInstance);
+            _parlorSolver = new ParlorSolver(LoggerInstance);
             RoomPatches.Initialize(LoggerInstance);
             Events.Initialize(LoggerInstance);
             HarmonyInstance.PatchAll();
@@ -56,10 +57,13 @@ namespace KaitoKid.BluePrinceDayOne
                 return;
             }
 
-            //if (_solvedParlor)
-            //{
-            //    return;
-            //}
+            if (ParlorGameToSolve != null)
+            {
+                if (_parlorSolver.SolveParlorGame(ParlorGameToSolve))
+                {
+                    ParlorGameToSolve = null;
+                }
+            }
         }
 
         public override void OnApplicationQuit()
