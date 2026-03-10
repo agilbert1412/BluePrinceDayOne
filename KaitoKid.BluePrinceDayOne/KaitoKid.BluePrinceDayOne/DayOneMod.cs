@@ -12,14 +12,19 @@ namespace KaitoKid.BluePrinceDayOne
 {
     public class DayOneMod : MelonMod
     {
+        public static DayOneMod Instance;
+
         public DayOneConfig _config;
         public DayOneInput _input;
         public PlayMakerFSM GlobalPersistentManager;
         public PlayMakerFSM GlobalManager;
         public List<PlayMakerFSM> ParlorGames;
+        public PlayMakerFSM? ParlorGame => ParlorGames.Any() ? ParlorGames.First() : null;
 
         public override void OnInitializeMelon()
         {
+            Instance = this;
+
             LoggerInstance.Msg($"Initializing DayOne...");
             base.OnInitializeMelon();
             ParlorGames = new List<PlayMakerFSM>();

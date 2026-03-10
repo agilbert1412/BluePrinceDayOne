@@ -22,19 +22,36 @@ namespace KaitoKid.BluePrinceDayOne
 
         public static void OnRoomSpawned(GameObject room, GameObject roomTransform)
         {
-            if (room != null)
+            if (room == null)
             {
-                _logger.Msg($"Item: {room.name}");
+                return;
             }
 
-            if (roomTransform != null)
+            // _logger.Msg($"Item: {room.name}");
+
+            if (roomTransform == null)
             {
-                _logger.Msg($"Transform: {roomTransform.name} - {roomTransform.transform.position.ToString()}");
+                return;
             }
+
+            // _logger.Msg($"Transform: {roomTransform.name} - {roomTransform.transform.position.ToString()}");
 
             var roomName = room.name;
 
             _logger.Msg($"Spawned: {roomName}");
+
+            if (roomName.StartsWith("Parlor"))
+            {
+                var parlorGame = GameObject.Find($"{roomName}/_GAMEPLAY/PARLOR GAME");
+                var gameFsm = parlorGame.GetComponent<PlayMakerFSM>();
+                if (gameFsm == null)
+                {
+                    _logger.Msg($"Parlor GameObject did not contain a `{nameof(PlayMakerFSM)}`");
+                    return;
+                }
+
+                DayOneMod.Instance.ParlorGames.Add(gameFsm);
+            }
         }
     }
 }

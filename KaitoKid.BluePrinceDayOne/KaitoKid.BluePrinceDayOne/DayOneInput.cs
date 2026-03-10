@@ -18,7 +18,7 @@ namespace KaitoKid.BluePrinceDayOne
         {
             if (Input.GetKeyDown(KeyCode.Keypad0))
             {
-                PrintFsmStates(GetParlorGameFsm());
+                PrintFsmStates(DayOneMod.Instance.ParlorGame);
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -72,10 +72,9 @@ namespace KaitoKid.BluePrinceDayOne
 
         private void OpenParlorBox(string color)
         {
-            var gameFsm = GetParlorGameFsm();
             var boxFsm = GetBoxFsm(color);
 
-            if (gameFsm == null)
+            if (DayOneMod.Instance.ParlorGame == null)
             {
                 _logger.Msg($"Could not find an active Parlor Game with an FSM.");
                 return;
@@ -91,16 +90,9 @@ namespace KaitoKid.BluePrinceDayOne
 
             PrintFsmStates(boxFsm);
 
-            //if (new[] { "Prestate", "Prestate 2" }.Contains(boxFsm.ActiveStateName))
-            //{
-                SendEventAndLog(boxFsm, "hov");
-                SendEventAndLog(boxFsm, "cont");
-                SendEventAndLog(boxFsm, "click");
-                //if (new[] { "Inventory Remove", "State 3", "State 2", "State 7" }.Contains(boxFsm.ActiveStateName))
-                //{
-                //    _solvedParlor = true;
-                //}
-            //}
+            SetStateAndLog(boxFsm, "Click");
+            SendEventAndLog(DayOneMod.Instance.ParlorGame, "Event 0");
+            SendEventAndLog(DayOneMod.Instance.ParlorGame, color.ToLower());
         }
 
         private static PlayMakerFSM? GetBoxFsm(string color)
@@ -123,10 +115,9 @@ namespace KaitoKid.BluePrinceDayOne
 
         private void DisableFsmStateAction(string color, string stateName, int actionIndex)
         {
-            var gameFsm = GetParlorGameFsm();
             var boxFsm = GetBoxFsm(color);
 
-            if (gameFsm == null)
+            if (DayOneMod.Instance.ParlorGame == null)
             {
                 _logger.Msg($"Could not find an active Parlor Game with an FSM.");
                 return;
@@ -157,10 +148,9 @@ namespace KaitoKid.BluePrinceDayOne
 
         private void PrintFsmStates(string color)
         {
-            var gameFsm = GetParlorGameFsm();
             var boxFsm = GetBoxFsm(color);
 
-            if (gameFsm == null)
+            if (DayOneMod.Instance.ParlorGame == null)
             {
                 _logger.Msg($"Could not find an active Parlor Game with an FSM.");
                 return;
@@ -172,8 +162,16 @@ namespace KaitoKid.BluePrinceDayOne
                 return;
             }
 
-            PrintFsmStates(gameFsm);
+            PrintFsmStates(DayOneMod.Instance.ParlorGame);
             PrintFsmStates(boxFsm);
+        }
+
+        private void PrintFsmStates(List<PlayMakerFSM> fsms)
+        {
+            foreach (var playMakerFsm in fsms)
+            {
+                PrintFsmStates(playMakerFsm);
+            }
         }
 
         private void PrintFsmStates(PlayMakerFSM fsm)
@@ -193,6 +191,14 @@ namespace KaitoKid.BluePrinceDayOne
                     message += $"(Active State)";
                 }
                 _logger.Msg(message);
+            }
+        }
+
+        private void SendEventAndLog(List<PlayMakerFSM> fsms, string eventName)
+        {
+            foreach (var playMakerFsm in fsms)
+            {
+                SendEventAndLog(playMakerFsm, eventName);
             }
         }
 
