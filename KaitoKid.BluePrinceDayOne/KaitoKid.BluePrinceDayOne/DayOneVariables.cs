@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace KaitoKid.BluePrinceDayOne
 {
-    public class Day1Variables
+    public class DayOneVariables
     {
         private MelonLogger.Instance _logger;
         private DayOneConfig _config;
         private PlayMakerFSM _globalPersistentManager;
         private PlayMakerFSM _globalManager;
 
-        public Day1Variables(MelonLogger.Instance logger, DayOneConfig config)
+        public DayOneVariables(MelonLogger.Instance logger, DayOneConfig config)
         {
             _logger = logger;
             _config = config;

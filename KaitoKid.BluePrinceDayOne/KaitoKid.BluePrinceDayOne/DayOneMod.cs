@@ -12,7 +12,7 @@ namespace KaitoKid.BluePrinceDayOne
 
         public DayOneConfig _config;
         public DayOneInput _input;
-        private Day1Variables _day1Vars;
+        private DayOneVariables _day1Vars;
         private ParlorSolver _parlorSolver;
         private DartsSolver _dartsSolver;
         public PlayMakerFSM ParlorGameToSolve;
@@ -28,7 +28,7 @@ namespace KaitoKid.BluePrinceDayOne
             DartboardToSolve = null;
             _config = new DayOneConfig();
             _input = new DayOneInput(LoggerInstance);
-            _day1Vars = new Day1Variables(LoggerInstance, _config);
+            _day1Vars = new DayOneVariables(LoggerInstance, _config);
             _parlorSolver = new ParlorSolver(LoggerInstance);
             _dartsSolver = new DartsSolver(LoggerInstance);
             RoomPatches.Initialize(LoggerInstance);
