@@ -1,13 +1,6 @@
 ﻿using Il2Cpp;
 using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using static MelonLoader.MelonLogger;
-using Object = UnityEngine.Object;
 
 namespace KaitoKid.BluePrinceDayOne
 {
@@ -38,8 +31,15 @@ namespace KaitoKid.BluePrinceDayOne
 
             var roomName = room.name;
 
-            _logger.Msg($"Spawned: {roomName}");
+            // _logger.Msg($"Spawned: {roomName}");
 
+
+            RegisterParlor(roomName);
+            RegisterDarts(roomName);
+        }
+
+        private static void RegisterParlor(string roomName)
+        {
             if (roomName.StartsWith("Parlor"))
             {
                 var parlorGame = GameObject.Find($"{roomName}/_GAMEPLAY/PARLOR GAME");
@@ -51,6 +51,22 @@ namespace KaitoKid.BluePrinceDayOne
                 }
 
                 DayOneMod.Instance.ParlorGameToSolve = gameFsm;
+            }
+        }
+
+        private static void RegisterDarts(string roomName)
+        {
+            if (roomName.StartsWith("Billiard Room"))
+            {
+                var parlorGame = GameObject.Find($"{roomName}/_GAMEPLAY/Dartboard/Dartboard System");
+                var gameFsm = parlorGame.GetComponent<PlayMakerFSM>();
+                if (gameFsm == null)
+                {
+                    _logger.Error($"Dartboard GameObject did not contain a `{nameof(PlayMakerFSM)}`");
+                    return;
+                }
+
+                DayOneMod.Instance.DartboardToSolve = gameFsm;
             }
         }
     }

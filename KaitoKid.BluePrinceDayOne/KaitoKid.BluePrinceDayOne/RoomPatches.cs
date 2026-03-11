@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Il2Cpp;
 using Il2CppHutongGames.PlayMaker.Actions;
 using MelonLoader;
 
@@ -19,14 +18,14 @@ namespace KaitoKid.BluePrinceDayOne
         {
             try
             {
-                _logger.Msg($"Executing DayOne.{nameof(RoomPatches)}.{nameof(Postfix)}");
+                // _logger.Msg($"Executing DayOne.{nameof(RoomPatches)}.{nameof(Postfix)}");
                 if (__instance == null) return;
 
                 var obj = __instance.gameObject.value;
                 var poolName = __instance.poolName.value;
                 var transformObj = __instance.spawnTransform.value;
-                _logger.Msg($"obj: {obj}");
-                _logger.Msg($"poolName: {poolName}");
+                //_logger.Msg($"obj: {obj}");
+                //_logger.Msg($"poolName: {poolName}");
                 if (true || poolName == "Rooms")
                 {
                     Events.OnRoomSpawned(obj, transformObj);

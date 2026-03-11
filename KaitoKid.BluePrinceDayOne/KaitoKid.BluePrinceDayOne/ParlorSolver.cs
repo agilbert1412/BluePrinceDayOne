@@ -1,10 +1,5 @@
 ﻿using Il2Cpp;
 using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace KaitoKid.BluePrinceDayOne
@@ -40,6 +35,7 @@ namespace KaitoKid.BluePrinceDayOne
                 return;
             }
 
+            _logger.Msg($"Attempting to solve Parlor Game (State: `{_parlorGameToSolve.ActiveStateName}`)");
             SendEventAndLog(_parlorGameToSolve, "Event 0");
             var correctBoxColor = _parlorGameToSolve.ActiveStateName.Split(" ")[0];
             _logger.Msg($"Parlor Solution is {correctBoxColor} because state is `{_parlorGameToSolve.ActiveStateName}`");
